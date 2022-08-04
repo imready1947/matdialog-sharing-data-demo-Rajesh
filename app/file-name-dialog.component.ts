@@ -4,11 +4,11 @@ import { FormGroup, FormBuilder } from '@angular/forms';
 
 @Component({
   template: `
-    <form [formGroup]="form" (ngSubmit)="submit(form)">
-      <h1 mat-dialog-title>Add file</h1>
+    <form [formGroup]="saveTemplateForm" (ngSubmit)="submit(saveTemplateForm)">
+      <h1 mat-dialog-title>Save Template</h1>
       <mat-dialog-content>
         <mat-form-field>
-          <input matInput formControlName="filename" placeholder="Enter filename">
+          <input matInput formControlName="templateName" placeholder="Enter template name">
         </mat-form-field>
         
 
@@ -18,9 +18,8 @@ import { FormGroup, FormBuilder } from '@angular/forms';
         formControlName="selectedTemplate"
         placeholder="Country"
       >
-        <mat-option [value]="'GB'">Great Britain</mat-option>
-        <mat-option [value]="'US'">United States</mat-option>
-        <mat-option [value]="'CA'">Canada</mat-option>
+        <mat-option [value]="'wellTemplate'">Well Template</mat-option>
+        <mat-option [value]="'myTemplate'">My Template</mat-option>
       </mat-select>
     </mat-form-field>
       </mat-dialog-content>
@@ -29,11 +28,11 @@ import { FormGroup, FormBuilder } from '@angular/forms';
         <button mat-button type="button" (click)="dialogRef.close()">Cancel</button>
       </mat-dialog-actions>
     </form>
-    <div>{{form.value | json}}
+    <div>{{saveTemplateForm.value | json}}
   `,
 })
 export class FileNameDialogComponent implements OnInit {
-  form: FormGroup;
+  saveTemplateForm: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,22 +41,24 @@ export class FileNameDialogComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      filename: this.data.filename ? this.data.filename : '',
+    this.saveTemplateForm = this.formBuilder.group({
+      templateName: this.data.filename ? this.data.filename : '',
       selectedTemplate: this.data.selectedTemplate
         ? this.data.selectedTemplate
         : '',
     });
+    console.log('form data ----', this.data);
   }
 
   submit(form) {
     this.dialogRef.close(
-      `${form.value.filename}` + `${form.value.selectedTemplate}`
+      `${form.value.templateName}` + `${form.value.selectedTemplate}`
     );
 
     console.log(
       'form data',
-      `${form.value.filename}` + ' ' + `${form.value.selectedTemplate}`
+      `${form.value.templateName}` + '  ' + `${form.value.selectedTemplate}`
     );
+    console.log('form data ----', form.value);
   }
 }
